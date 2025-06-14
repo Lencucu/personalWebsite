@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+main {
+    background-image: url('/images/bgp/lc.png');
+    background-size: auto 160%; /* 或 contain，按需调整 */
+    background-position: 55% 55%;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* 关键！让背景固定 */
+    font-family: smileySans;
+    user-select: none;
+}

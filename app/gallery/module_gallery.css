@@ -1,0 +1,58 @@
+.body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(160deg, #0d0d0d 0%, #1a1a1a 40%, #000000 100%), radial-gradient(circle at top left, #222 10%, transparent 70%);
+  background-blend-mode: overlay;
+  overflow: hidden;
+  color: white;
+  font-family: sans-serif;
+}
+
+.galleryContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 300px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  height: 100%;
+  overflow-x: auto;
+  padding: 0 calc(100vw / 12);
+  box-sizing: content-box;
+  scroll-behavior: smooth;
+}
+
+.gallery::-webkit-scrollbar {
+  display: none;
+}
+
+.gallery img {
+  height: 100%;
+  width: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.scrollHint {
+  position: fixed;
+  left: 10px;
+  bottom: 10px;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #ccc;
+  font-family: sans-serif;
+  z-index: 9999;
+  pointer-events: none;
+}
