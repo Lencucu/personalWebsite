@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from './module_gallery.css';
+import styles from './gallery.module.css';
 
 export default function GalleryPage() {
   return (

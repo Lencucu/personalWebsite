@@ -1,4 +1,4 @@
-import styles from './module_gallery.css';
+import styles from './gallery.module.css';
 
 export const metadata = {
   title: '个人画廊网站',
