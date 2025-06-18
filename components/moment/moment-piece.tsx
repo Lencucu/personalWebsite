@@ -1,4 +1,7 @@
-export default function MomentPiece({content,url,pos}:{string,string,number}) {
+export default function MomentPiece({content,url,pos}:{
+    content:string,
+    url:string,
+    pos:number}) {
   return (
     <div style={{ left: `${5 + pos * 24}vw`}}
       className={`absolute top-[4vh] rounded-2xl overflow-hidden h-[36vh] w-[48vh] cursor-pointer`}>
