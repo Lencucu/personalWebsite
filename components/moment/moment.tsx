@@ -12,7 +12,7 @@ export default function Moments() {
       .then(data => setLines(data.lines || []));
   }, []);
 
-  return lines.reduce((acc, line, idx) => {
+  return lines.reduce<string[]>((acc, line, idx) => {
       if (idx % 2 === 0) {
         // 偶数索引开始合并两条
         acc.push(lines[idx] + (lines[idx + 1] ? (' ' + lines[idx + 1]) : ''));
