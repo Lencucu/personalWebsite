@@ -3,7 +3,12 @@
 import { gsap } from 'gsap';
 import Link from 'next/link';
 
-export default function FoldedPaper(obj:object){
+type FoldedPaperProps = {
+  className?: string;
+  画廊?: string;
+};
+
+export default function FoldedPaper(obj:FoldedPaperProps){
 	let item = [], index = 0, classSetting='';
 	Object.entries(obj).forEach(([key, value]) => {
 		if(key!='className'){
