@@ -9,7 +9,7 @@ type FoldedPaperProps = {
 };
 
 export default function FoldedPaper(obj:FoldedPaperProps){
-	let item = [], index = 0, classSetting='';
+	let item:React.ReactNode[] = [], index = 0, classSetting='';
 	Object.entries(obj).forEach(([key, value]) => {
 		if(key!='className'){
 			item[index] = <Link className={classSetting} key={key} href={value}>{key}</Link>;
