@@ -7,7 +7,7 @@ import Moments from '@/components/moment/moment';
 
 export default function HomePage() {
   return (
-    <main>
+    <>
       <div className="relative h-[50vh] text-left tracking-wide whitespace-nowrap overflow-hidden">
       <img className="absolute w-[20vh] h-[20vh]" src="/images/pos.svg" />
       {/*左上角一个行迹标定*/}
@@ -23,10 +23,14 @@ export default function HomePage() {
         {/*奏折的形式打开*/}
         <div className={`absolute bottom-[10%] pl-[06%] pr-[17%] text-xl`}>他的动态</div>
       </div>
-      <div className="relative pl-[06%] h-[50vh] flex space-x-4 overflow-x-auto scrollbar-hide">
+      <div className="relative pl-[06%] h-[50vh] flex space-x-4 overflow-x-auto scrollbar-hide"
+        style={{
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 40%, transparent 70%)',
+          maskImage: 'linear-gradient(to right, transparent 0%, black 5%, black 40%, transparent 70%)',
+        }}>
         <Moments />
-        <Link href='/test' className="text-gray-100">TestPage</Link>
+        <Link href='/test' className="absolute text-gray-100">TestPage</Link>
       </div>
-    </main>
+    </>
   );
 }
