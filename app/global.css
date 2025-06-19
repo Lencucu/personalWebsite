@@ -9,3 +9,12 @@ main {
     font-family: smileySans;
     user-select: none;
 }
+
+/* 兼容性较好的滚动条隐藏方法 */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;             /* Chrome/Safari */
+}

@@ -3,8 +3,8 @@ export default function MomentPiece({content,url,pos}:{
     url:string,
     pos:number}) {
   return (
-    <div style={{ left: `${5 + pos * 24}vw`}}
-      className={`absolute top-[4vh] rounded-2xl overflow-hidden h-[36vh] w-[48vh] cursor-pointer`}>
+    <div /*style={{ left: `${5 + pos * 24}vw`}}*/
+      className={`relative top-[4vh] flex-shrink-0 rounded-2xl overflow-hidden h-[36vh] w-[48vh] cursor-pointer`}>
       <iframe
         src={url}
         className="w-full h-full pointer-events-none border-0"

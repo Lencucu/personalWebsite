@@ -20,5 +20,5 @@ export default function Moments() {
       return acc;
     }, []).map((combinedLine, idx, arr) => (
     <MomentPiece key={idx} pos={arr.length-1-idx} content={combinedLine.split(' ')[0]} url={combinedLine.split(' ')[1]}/>
-  ));
+  )).reverse();
 }
