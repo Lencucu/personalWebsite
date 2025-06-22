@@ -6,6 +6,7 @@ import Link from 'next/link';
 type FoldedPaperProps = {
   className?: string;
   画廊?: string;
+  入口?: string;
 };
 
 export default function FoldedPaper(obj:FoldedPaperProps){
