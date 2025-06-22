@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html>
       <body>
-        <main>
+        <main className={smileySans.className}>
           {children}
         </main>
       </body>
