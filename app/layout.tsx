@@ -5,6 +5,7 @@ import localFont from 'next/font/local'
 
 const smileySans = localFont({
   src: './../public/fonts/SmileySans-Oblique.ttf.woff2',
+  variable: '--font-smileySans',
 })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
