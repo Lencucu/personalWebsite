@@ -18,11 +18,19 @@ export default function ImageCompareSplit() {
 
   // 监听鼠标拖动更新控制点
   useEffect(() => {
-    function onMouseMove(e: MouseEvent) {
+    function onMouseMove(e: MouseEvent | TouchEvent) {
       if (draggingPoint === null || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width * 100;
-      const y = (e.clientY - rect.top) / rect.height * 100;
+      let clientX, clientY;
+      if (e instanceof TouchEvent) {
+        clientX = (e.touches[0].clientX - rect.left) / rect.width * 100;
+        clientY = (e.touches[0].clientY - rect.top) / rect.height * 100;
+      } else {
+        clientX = (e.clientX - rect.left) / rect.width * 100;
+        clientY = (e.clientY - rect.top) / rect.height * 100;
+      }
+      const x = clientX;
+      const y = clientY;
       setPoints((oldPoints) => {
         const newPoints = [...oldPoints];
         newPoints[draggingPoint] = { x, y };
@@ -34,9 +42,13 @@ export default function ImageCompareSplit() {
     }
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('touchmove', onMouseMove);
+    window.addEventListener('touchend', onMouseUp);
     return () => {
       window.removeEventListener('mousemove', onMouseMove);
       window.removeEventListener('mouseup', onMouseUp);
+      window.removeEventListener('touchmove', onMouseMove);
+      window.removeEventListener('touchend', onMouseUp);
     };
   }/*, [draggingPoint]*/);
 
@@ -115,12 +127,13 @@ export default function ImageCompareSplit() {
             key={i}
             cx={p.x}
             cy={p.y}
-            r={0.8}
+            r={1.15}
             fill="skyblue"
             stroke="white"
             strokeWidth={0.2}
             className="cursor-pointer pointer-events-auto"
             onMouseDown={() => setDraggingPoint(i)}
+            onTouchStart={() => setDraggingPoint(i)}
           />
         ))}
       </svg>
