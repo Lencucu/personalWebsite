@@ -1,53 +1,130 @@
-'use client'
+'use client';
+import { useState, useRef, useEffect } from 'react';
+import DynamicMap from '@/components/map/dynamic-map'
+import Home from '@/components/main/home'
+import GalleryPage from './../gallery/page'
 
-import './global.css';
-import Link from 'next/link';
-import FoldedPaper from '@/components/foldedPaper/foldedPaper';
-import Moments from '@/components/moment/moment';
-import gsap from "gsap";
-import { useEffect } from 'react'
+export default function ImageCompareSplit() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [draggingPoint, setDraggingPoint] = useState<number | null>(null);
 
-export default function HomePage() {
+  // 控制点初始位置（百分比）
+  const [points, setPoints] = useState([
+    { x: 28/2, y: 0 },
+    { x: 17/2, y: (100-70-8)/2 },
+    { x: 10/2, y: (100-36-6)/2 },
+    { x: 6/2, y: (100-10-5)/2 },
+    { x: 0, y: 100 },
+  ]);
+
+  // 监听鼠标拖动更新控制点
   useEffect(() => {
-    // gsap.to("#loading-cover", {
-    gsap.to("#main-content", {
-      opacity: 1,
-      duration: 1,
-    });
-  }, []);
+    function onMouseMove(e: MouseEvent) {
+      if (draggingPoint === null || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width * 100;
+      const y = (e.clientY - rect.top) / rect.height * 100;
+      setPoints((oldPoints) => {
+        const newPoints = [...oldPoints];
+        newPoints[draggingPoint] = { x, y };
+        return newPoints;
+      });
+    }
+    function onMouseUp() {
+      setDraggingPoint(null);
+    }
+    window.addEventListener('mousemove', onMouseMove);
+    window.addEventListener('mouseup', onMouseUp);
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+    };
+  }/*, [draggingPoint]*/);
+
+  // 构造左侧裁剪路径（多边形）
+  const leftClipPath = `
+    polygon(
+      0% 0%, 
+      ${points.map((p) => `${p.x}% ${p.y}%`).join(', ')}, 
+      0% 100%
+    )
+  `;
+
+  // 构造右侧裁剪路径（多边形，反向）
+  const rightClipPath = `
+    polygon(
+      100% 0%, 
+      100% 100%, 
+      ${points.map(p => `${p.x}% ${p.y}%`).reverse().join(', ')}
+    )
+  `;
+
   return (
-    <>
-{/*      <img
-        id="loading-cover"
-        src="/images/skeleton.png"
-        className="z-10 fixed inset-0 w-full h-full object-cover"
-        style={{ pointerEvents: "none" }}
-      />*/}
-      <div id="main-content" className="opacity-0">
-        <div className="relative h-[50vh] text-left tracking-wide whitespace-nowrap overflow-hidden">
-          {/*左上角一个行迹标定*/}
-          {/*<img className="absolute w-[20vh] h-[20vh]" src="/images/pos.svg" />*/}
-          <div className={`absolute bottom-[70%] pl-[17%] pr-[06%] text-4xl`}>
-            这是属于一条‘
-            <Link href='/aboutMe' className="text-blue-500">库</Link>
-            ’子的网站
-          </div>
-          {/*<div className={`absolute bottom-[36%] pl-[10%] pr-[10%] text-2xl`}>他还有更多*/}
-          <div className={`absolute bottom-[36%] pl-[10%] pr-[10%] text-2xl`}>他的画廊
-            <FoldedPaper className='text-gray-400' 入口='/gallery'/>
-          </div>
-          {/*奏折的形式打开*/}
-          <div className={`absolute bottom-[10%] pl-[06%] pr-[17%] text-xl`}>微动态↘️</div>
-        </div>
-        <div className="relative pl-[06%] h-[50vh] w-[70%] flex space-x-4 overflow-x-auto scrollbar-hide"
-          style={{
-            WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%)',
-            maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%)',
-          }}>
-          <Moments />
-          <Link href='/test' className="absolute bottom-0 text-white">TestPage</Link>
-        </div>
+    <div
+      ref={containerRef}
+      style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', userSelect: 'none' }}
+    >
+      {/* 左侧，裁剪 */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          clipPath: leftClipPath,
+          WebkitClipPath: leftClipPath,
+          zIndex: 1,
+        }}
+      >
+        <DynamicMap />
       </div>
-    </>
+
+      {/* 右侧，裁剪 */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          clipPath: rightClipPath,
+          WebkitClipPath: rightClipPath,
+          zIndex: 1,
+        }}
+      >
+        <Home />
+      </div>
+
+      {/* 分割线 */}
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        className="absolute top-0 left-0 w-full h-full pointer-events-none z-10"
+      >
+{/*        <polyline
+          points={points.map((p) => `${p.x},${p.y}`).join(' ')}
+          fill="none"
+          stroke="white"
+          strokeWidth={3}
+          className="pointer-events-auto"
+        />
+        <polyline
+          points={points.map((p) => `${p.x},${p.y}`).join(' ')}
+          fill="none"
+          stroke="black"
+          strokeWidth={1}
+          className="pointer-events-auto"
+        />*/}
+
+        {points.map((p, i) => (
+          <circle
+            key={i}
+            cx={p.x}
+            cy={p.y}
+            r={0.8}
+            fill="skyblue"
+            stroke="white"
+            strokeWidth={0.2}
+            className="cursor-pointer pointer-events-auto"
+            onMouseDown={() => setDraggingPoint(i)}
+          />
+        ))}
+      </svg>
+    </div>
   );
 }
