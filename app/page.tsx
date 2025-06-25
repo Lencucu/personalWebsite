@@ -2,7 +2,6 @@
 import { useState, useRef, useEffect } from 'react';
 import DynamicMap from '@/components/map/dynamic-map'
 import Home from '@/components/main/home'
-import GalleryPage from './../gallery/page'
 
 export default function ImageCompareSplit() {
   const containerRef = useRef<HTMLDivElement>(null);
