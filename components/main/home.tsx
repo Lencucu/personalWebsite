@@ -45,7 +45,8 @@ export default function Home() {
             maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%)',
           }}>
           <Moments />
-          <Link href='/test' className="absolute bottom-0 text-white">TestPage</Link>
+          {/*<Link href='/test' className="absolute bottom-0 text-white">TestPage</Link>*/}
+          <a href='/game_test/what.html' className="absolute bottom-0 text-white">TestPage</a>
         </div>
       </div>
     </>
