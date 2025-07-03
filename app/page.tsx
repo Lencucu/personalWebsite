@@ -64,7 +64,7 @@ export default function ImageCompareSplit() {
       setPoints((oldPoints) => {
         const newPoints = [...oldPoints];
         // newPoints[draggingPoint] = { x, y };
-        const t = Math.min(trans_effect * 1.5, 1);
+        const t = Math.min(trans_effect, 1);
         const bezierPoint0 = bezierPoint(Sp_Ep[0], t);
         const bezierPoint1 = bezierPoint(Sp_Ep[1], t);
         const bezierPoint2 = bezierPoint(Sp_Ep[2], t);
