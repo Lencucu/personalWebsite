@@ -7,48 +7,87 @@ export default function ImageCompareSplit() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingPoint, setDraggingPoint] = useState<number | null>(null);
 
+  function factorial(n: number): number {
+    return n <= 1 ? 1 : n * factorial(n - 1);
+  }
+
+  function binomial(n: number, k: number): number {
+    return factorial(n) / (factorial(k) * factorial(n - k));
+  }
+
+  function bezierPoint(controlPoints: number[][], t: number): number[] {
+    const n = controlPoints.length - 1;
+
+    return controlPoints[0].map((_, dim) => {
+      let sum = 0;
+      for (let i = 0; i <= n; i++) {
+        const coeff = binomial(n, i) * Math.pow(1 - t, n - i) * Math.pow(t, i);
+        sum += coeff * controlPoints[i][dim];
+      }
+      return sum;
+    });
+  }
+
+  const Sp_Ep = [
+    [[ 28/2, 0            ],[100,   0]],
+    [[ 17/2, (100-70-8)/2 ],[100,  33]],
+    [[ 10/2, (100-36-6)/2 ],[100,  67]],
+    [[  6/2, (100-10-5)/2 ],[100, 100]],
+    [[    0, 100          ],[  0,   0]],
+  ];
+
   // 控制点初始位置（百分比）
   const [points, setPoints] = useState([
-    { x: 28/2, y: 0 },
-    { x: 17/2, y: (100-70-8)/2 },
-    { x: 10/2, y: (100-36-6)/2 },
-    { x: 6/2, y: (100-10-5)/2 },
-    { x: 0, y: 100 },
+    { x: Sp_Ep[0][0][0], y: Sp_Ep[0][0][1]},
+    { x: Sp_Ep[1][0][0], y: Sp_Ep[1][0][1]},
+    { x: Sp_Ep[2][0][0], y: Sp_Ep[2][0][1]},
+    { x: Sp_Ep[3][0][0], y: Sp_Ep[3][0][1]},
+    { x: Sp_Ep[4][0][0], y: Sp_Ep[4][0][1]},
   ]);
 
   // 监听鼠标拖动更新控制点
   useEffect(() => {
-    function onMouseMove(e: MouseEvent | TouchEvent) {
+    function on_Move(e: MouseEvent | TouchEvent) {
       if (draggingPoint === null || !containerRef.current) return;
       const rect = containerRef.current.getBoundingClientRect();
-      let clientX, clientY;
+      let clientX_effect, clientY_effect;
       if (e instanceof TouchEvent) {
-        clientX = (e.touches[0].clientX - rect.left) / rect.width * 100;
-        clientY = (e.touches[0].clientY - rect.top) / rect.height * 100;
+        clientX_effect = (e.touches[0].clientX - rect.left) / rect.width;
+        clientY_effect = (e.touches[0].clientY - rect.top) / rect.height;
       } else {
-        clientX = (e.clientX - rect.left) / rect.width * 100;
-        clientY = (e.clientY - rect.top) / rect.height * 100;
+        clientX_effect = (e.clientX - rect.left) / rect.width;
+        clientY_effect = (e.clientY - rect.top) / rect.height;
       }
-      const x = clientX;
-      const y = clientY;
+      const x = clientX_effect * 100;
+      const y = clientY_effect * 100;
+      const trans_effect = clientX_effect - Sp_Ep[draggingPoint][0][0]/100;
       setPoints((oldPoints) => {
         const newPoints = [...oldPoints];
-        newPoints[draggingPoint] = { x, y };
+        // newPoints[draggingPoint] = { x, y };
+        const t = Math.min(trans_effect * 1.5, 1);
+        const bezierPoint0 = bezierPoint(Sp_Ep[0], t);
+        const bezierPoint1 = bezierPoint(Sp_Ep[1], t);
+        const bezierPoint2 = bezierPoint(Sp_Ep[2], t);
+        const bezierPoint3 = bezierPoint(Sp_Ep[3], t);
+        newPoints[0] = { x: bezierPoint0[0], y: bezierPoint0[1] };
+        newPoints[1] = { x: bezierPoint1[0], y: bezierPoint1[1] };
+        newPoints[2] = { x: bezierPoint2[0], y: bezierPoint2[1] };
+        newPoints[3] = { x: bezierPoint3[0], y: bezierPoint3[1] };
         return newPoints;
       });
     }
-    function onMouseUp() {
+    function on_Up() {
       setDraggingPoint(null);
     }
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-    window.addEventListener('touchmove', onMouseMove);
-    window.addEventListener('touchend', onMouseUp);
+    window.addEventListener('mousemove', on_Move);
+    window.addEventListener('mouseup', on_Up);
+    window.addEventListener('touchmove', on_Move);
+    window.addEventListener('touchend', on_Up);
     return () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
-      window.removeEventListener('touchmove', onMouseMove);
-      window.removeEventListener('touchend', onMouseUp);
+      window.removeEventListener('mousemove', on_Move);
+      window.removeEventListener('mouseup', on_Up);
+      window.removeEventListener('touchmove', on_Move);
+      window.removeEventListener('touchend', on_Up);
     };
   }/*, [draggingPoint]*/);
 
@@ -105,33 +144,34 @@ export default function ImageCompareSplit() {
       <svg
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
+        // preserveAspectRatio="xMidYMid slice"
         className="absolute top-0 left-0 w-full h-full pointer-events-none z-10"
       >
 {/*        <polyline
           points={points.map((p) => `${p.x},${p.y}`).join(' ')}
           fill="none"
-          stroke="white"
-          strokeWidth={3}
+          stroke="gray"
+          strokeWidth={30}
           className="pointer-events-auto"
-        />
+          vectorEffect="non-scaling-stroke"
+        />*/}
         <polyline
           points={points.map((p) => `${p.x},${p.y}`).join(' ')}
           fill="none"
-          stroke="black"
-          strokeWidth={1}
-          className="pointer-events-auto"
-        />*/}
+          // stroke="black"
+          strokeWidth={10}
+          className="pointer-events-auto stroke-fuchsia-100"
+          vectorEffect="non-scaling-stroke"
+        />
 
         {points.map((p, i) => (
           <circle
             key={i}
             cx={p.x}
             cy={p.y}
-            r={1.15}
-            fill="skyblue"
-            stroke="white"
-            strokeWidth={0.2}
-            className="cursor-pointer pointer-events-auto"
+            r={0.5}
+            className="cursor-pointer pointer-events-auto stroke-10 stroke-white/30 fill-transparent"
+            vectorEffect="non-scaling-stroke"
             onMouseDown={() => setDraggingPoint(i)}
             onTouchStart={() => setDraggingPoint(i)}
           />
