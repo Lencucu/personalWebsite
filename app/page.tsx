@@ -112,7 +112,7 @@ export default function ImageCompareSplit() {
   return (
     <div
       ref={containerRef}
-      style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden', userSelect: 'none' }}
+      className="relative w-[100dvw] h-[100dvh] overflow-hidden select-none"
     >
       {/* 左侧，裁剪 */}
       <div
