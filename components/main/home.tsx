@@ -24,7 +24,7 @@ export default function Home() {
         style={{ pointerEvents: "none" }}
       />*/}
       <div id="main-content" className="opacity-0">
-        <div className="relative h-[50vh] text-left tracking-wide whitespace-nowrap overflow-hidden">
+        <div className="relative h-[50dvh] text-left tracking-wide whitespace-nowrap overflow-hidden">
           {/*左上角一个行迹标定*/}
           {/*<img className="absolute w-[20vh] h-[20vh]" src="/images/pos.svg" />*/}
           <div className={`absolute bottom-[70%] pl-[17%] pr-[06%] text-4xl`}>
@@ -39,7 +39,7 @@ export default function Home() {
           {/*奏折的形式打开*/}
           <div className={`absolute bottom-[10%] pl-[06%] pr-[17%] text-xl`}>微动态↘️</div>
         </div>
-        <div className="relative pl-[06%] h-[50vh] w-[70%] flex space-x-4 overflow-x-auto scrollbar-hide"
+        <div className="relative pl-[06%] h-[50dvh] w-[70%] flex space-x-4 overflow-x-auto scrollbar-hide"
           style={{
             WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%)',
             maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%)',
