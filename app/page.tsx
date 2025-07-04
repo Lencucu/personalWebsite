@@ -112,7 +112,7 @@ export default function ImageCompareSplit() {
   return (
     <div
       ref={containerRef}
-      className="relative w-[100dvw] h-[100dvh] overflow-hidden select-none pb-[env(safe-area-inset-bottom)]"
+      className="relative w-[100dvw] h-[100dvh] overflow-hidden select-none pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]"
     >
       {/* 左侧，裁剪 */}
       <div
