@@ -7,6 +7,7 @@ type FoldedPaperProps = {
   className?: string;
   画廊?: string;
   入口?: string;
+  口袋以及破洞?: string;
 };
 
 export default function FoldedPaper(obj:FoldedPaperProps){

@@ -1,7 +1,7 @@
 .body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100dvh;
   background: linear-gradient(160deg, #0d0d0d 0%, #1a1a1a 40%, #000000 100%), radial-gradient(circle at top left, #222 10%, transparent 70%);
   background-blend-mode: overlay;
   overflow: hidden;
@@ -14,8 +14,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100vw;
-  height: 60vh;
+  width: 100dvw;
+  height: 60dvh;
   overflow: hidden;
   box-sizing: border-box;
 }

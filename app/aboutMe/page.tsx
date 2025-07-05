@@ -2,7 +2,7 @@
 // import { Mail, User } from 'lucide-react'; // 图标库
 import { useMemo } from 'react';
 
-export default function AboutMe() {
+export default function Page() {
   const birthday = new Date('2000-10-21'); // 🎂 修改你的生日
   const age = useMemo(() => {
     const now = new Date();

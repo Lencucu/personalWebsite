@@ -1,7 +1,8 @@
 import Image from 'next/image';
+
 import styles from './gallery.module.css';
 
-export default function GalleryPage() {
+export default function Page() {
   return (
     <div>
       <div className={styles.galleryContainer}>
