@@ -14,7 +14,7 @@ export async function fetchWordMean() {
   return data;
 }
 
-export default async function WordMean(){
+export default async function WordMeanPage(){
 	const data = await fetchWordMean();
 	return <div>{data[0].word}</div>;
 }
