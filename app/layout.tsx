@@ -1,7 +1,7 @@
-'use client'
-
 import './global.css';
-import localFont from 'next/font/local'
+import localFont from 'next/font/local';
+import FetchWordMean from '@/app/ui/fetchWordMean';
+import { Suspense } from 'react';
 
 const smileySans = localFont({
   src: './../public/fonts/SmileySans-Oblique.ttf.woff2',

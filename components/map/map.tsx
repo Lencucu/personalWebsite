@@ -55,6 +55,7 @@ export default function Map() {
       center={[35, 110]}
       zoom={5}
       style={{ height: '100vh', width: '100%' }}
+      zoomControl={false}
     >
 
       <TileLayer
