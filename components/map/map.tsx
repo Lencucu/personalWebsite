@@ -6,16 +6,16 @@ import { Suspense } from 'react';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
-import iconUrl from 'leaflet/dist/images/marker-icon.png';
-import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
+// import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
+// import iconUrl from 'leaflet/dist/images/marker-icon.png';
+// import shadowUrl from 'leaflet/dist/images/marker-shadow.png';
 
 import { MapMarkerData } from './map_sql';
 
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl,
-  iconUrl,
-  shadowUrl,
+  iconRetinaUrl: 'leaflet/marker-icon-2x.png',
+  iconUrl: 'leaflet/marker-icon.png',
+  shadowUrl: 'leaflet/marker-shadow.png',
 });
 
 // 修复默认图标
