@@ -44,7 +44,11 @@ const markers_template = [
   },
 ];
 
-function OffsetCenter({ targetLatLng, offsetXPercent, offsetYPercent }) {
+function OffsetCenter({ targetLatLng, offsetXPercent, offsetYPercent }:{
+  targetLatLng: L.LatLng,
+  offsetXPercent: number,
+  offsetYPercent: number
+}) {
   const map = useMap();
 
   useEffect(() => {
