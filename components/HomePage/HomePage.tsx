@@ -46,7 +46,7 @@ export default function HomePage() {
           }}>
           <Moments />
           <div className="flex absolute bottom-0 text-gray-200 space-x-1">
-            <Link href='/LocationTest'>PageTest</Link>
+            <Link href='/test'>PageTest</Link>
             <span>|</span>
             <a href='/game_test/what.html'>GameTest</a>
           </div>

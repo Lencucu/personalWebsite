@@ -7,11 +7,16 @@ export type WordMean = {
 };
 
 export async function fetchWordMean() {
-  const data = await sql<WordMean[]>`
-    SELECT *
-    FROM table1`;
-  console.log(data);
-  return data;
+  try{
+    const data = await sql<WordMean[]>`
+      SELECT *
+      FROM table1`;
+    console.log(data);
+    return data;
+  }catch(error){
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch the WordMean.');
+  }
 }
 
 export default async function WordMeanPage(){
