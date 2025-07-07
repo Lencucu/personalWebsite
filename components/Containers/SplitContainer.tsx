@@ -71,7 +71,7 @@ export default function SplitContainer({frameFront, frameBack}:{
       window.removeEventListener('touchmove', on_Move);
       window.removeEventListener('touchend', on_Up);
     };
-  }/*, [draggingPoint]*/);
+  }, []);
 
   // 构造左侧裁剪路径（多边形）
   const leftClipPath = `
@@ -103,7 +103,6 @@ export default function SplitContainer({frameFront, frameBack}:{
           inset: 0,
           clipPath: leftClipPath,
           WebkitClipPath: leftClipPath,
-          zIndex: 1,
         }}
       >
         {frameBack}
@@ -116,7 +115,6 @@ export default function SplitContainer({frameFront, frameBack}:{
           inset: 0,
           clipPath: rightClipPath,
           WebkitClipPath: rightClipPath,
-          zIndex: 1,
         }}
       >
         {frameFront}
@@ -129,14 +127,6 @@ export default function SplitContainer({frameFront, frameBack}:{
         // preserveAspectRatio="xMidYMid slice"
         className="absolute top-0 left-0 w-full h-full pointer-events-none z-10"
       >
-{/*        <polyline
-          points={points.map((p) => `${p.x},${p.y}`).join(' ')}
-          fill="none"
-          stroke="gray"
-          strokeWidth={30}
-          className="pointer-events-auto"
-          vectorEffect="non-scaling-stroke"
-        />*/}
         <polyline
           points={points.map((p) => `${p.x},${p.y}`).join(' ')}
           fill="none"

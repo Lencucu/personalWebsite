@@ -1,7 +1,7 @@
 import MainMapCom from '@/components/map/main'
-import HomePage from '@/components/HomePage/HomePage'
+import IntroPage from '@/components/IntroPage/IntroPage'
 import SplitContainer from '@/components/Containers/SplitContainer'
 
 export default function Origin() {
-  return <SplitContainer frameFront={<HomePage />} frameBack={<MainMapCom />}/>;
+  return <SplitContainer frameFront={<IntroPage />} frameBack={<MainMapCom />}/>;
 }

@@ -1,10 +1,32 @@
+'use client'
+
+import gsap from 'gsap';
+
 export default function MomentPiece({content,url,pos}:{
     content:string,
     url:string,
     pos:number}) {
+  function show(){
+    gsap.to(`#MomentPiece_${pos}`,{
+      opacity: 1,
+      duration: 0.45,
+    });
+  }
+  function hide(){
+    gsap.to(`#MomentPiece_${pos}`,{
+      opacity: 0.72,
+      duration: 0.8,
+    });
+  }
   return (
     <div /*style={{ left: `${5 + pos * 24}vw`}}*/
-      className={`relative top-[4vh] flex-shrink-0 rounded-2xl border-0 border-gray-300 overflow-hidden h-[36vh] w-[48vh] cursor-pointer`}>
+      id = {`MomentPiece_${pos}`}
+      className={`relative top-[4vh] flex-shrink-0 rounded-2xl border-0 border-gray-300 overflow-hidden h-[36vh] w-[48vh] cursor-pointer opacity-72`}
+      onMouseOver={show}
+      onMouseOut={hide}
+      onTouchStart={show}
+      onTouchEnd={hide}
+    >
       <iframe
         src={url}
         className="w-full h-full pointer-events-none border-0"
