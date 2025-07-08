@@ -3,10 +3,16 @@
 import Link from 'next/link';
 import gsap from "gsap";
 import { useEffect } from 'react'
+import localFont from 'next/font/local';
 
 import '@/app/global.css';
 import FoldedPaper from '@/components/foldedPaper/foldedPaper';
 import Moments from '@/components/moment/moment';
+
+const smileySans = localFont({
+  src: './../../public/fonts/SmileySans-Oblique.ttf.woff2',
+  variable: '--font-smileySans',
+})
 
 export default function HomePage() {
   useEffect(() => {
@@ -39,7 +45,7 @@ export default function HomePage() {
         <Moments />
       </div>
 
-      <div className="absolute pl-[06%] bottom-[01.5%] text-gray-200 space-x-1 flex">
+      <div className={`absolute ${smileySans.className} pl-[06%] bottom-[01.5%] text-gray-200 space-x-1 flex`}>
         <span>Tests</span><span>|</span>
         <Link href='/test'>page</Link>
         <a href='/game_test/what.html'>game</a>

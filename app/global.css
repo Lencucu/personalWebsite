@@ -6,7 +6,7 @@ main {
     background-position: 55% 55%;
     background-repeat: no-repeat;
     background-attachment: fixed; /* 关键！让背景固定 */
-    font-family: smileySans;
+    /*font-family: smileySans;*/
     user-select: none;
 }
 

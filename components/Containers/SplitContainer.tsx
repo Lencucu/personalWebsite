@@ -71,7 +71,7 @@ export default function SplitContainer({frameFront, frameBack}:{
       window.removeEventListener('touchmove', on_Move);
       window.removeEventListener('touchend', on_Up);
     };
-  }, []);
+  }, [draggingPoint]);
 
   // 构造左侧裁剪路径（多边形）
   const leftClipPath = `
