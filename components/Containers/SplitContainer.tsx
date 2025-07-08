@@ -3,19 +3,28 @@
 import { useState, useRef, useEffect } from 'react';
 import bezierPoint from '@/ops/bezierPoint'
 
-export default function SplitContainer({frameFront, frameBack}:{
-  frameFront: React.ReactNode,
-  frameBack: React.ReactNode,
+export default function SplitContainer({
+  FrameFront,
+  FrameBack,
+  bot_pl1 = [70,17],
+  bot_pl2 = [36,10],
+  bot_pl3 = [10, 7],
+}:{
+  FrameFront: React.ComponentType<any>,
+  FrameBack: React.ReactNode,
+  bot_pl1: [number,number],
+  bot_pl2: [number,number],
+  bot_pl3: [number,number],
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingPoint, setDraggingPoint] = useState<number | null>(null);
 
-  const Sp_Ep = [
-    [[ 28/2, 0            ],[100,   0]],
-    [[ 17/2, (100-70-8)/2 ],[100,  33]],
-    [[ 10/2, (100-36-6)/2 ],[100,  67]],
-    [[  6/2, (100-10-5)/2 ],[100, 100]],
-    [[    0, 100          ],[  0,   0]],
+  const Sp_Ep = [// start_point end_point
+    [[         28   /2, 0                   ],[100,   0]],
+    [[ bot_pl1[1]   /2, (100-bot_pl1[0]-8)/2],[100,  33]],
+    [[ bot_pl2[1]   /2, (100-bot_pl2[0]-6)/2],[100,  67]],
+    [[(bot_pl3[1]+1)/2, (100-bot_pl3[0]-5)/2],[100, 100]],
+    [[               0, 100                 ],[  0, 100]],
   ];
 
   // 控制点初始位置（百分比）
@@ -105,7 +114,7 @@ export default function SplitContainer({frameFront, frameBack}:{
           WebkitClipPath: leftClipPath,
         }}
       >
-        {frameBack}
+        {FrameBack}
       </div>
 
       {/* 右侧，裁剪 */}
@@ -117,7 +126,11 @@ export default function SplitContainer({frameFront, frameBack}:{
           WebkitClipPath: rightClipPath,
         }}
       >
-        {frameFront}
+        <FrameFront
+          bot_pl1 = {bot_pl1}
+          bot_pl2 = {bot_pl2}
+          bot_pl3 = {bot_pl3}
+        />
       </div>
 
       {/* 分割线 */}

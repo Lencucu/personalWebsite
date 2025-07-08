@@ -14,7 +14,15 @@ const smileySans = localFont({
   variable: '--font-smileySans',
 })
 
-export default function HomePage() {
+export default function HomePage({
+  bot_pl1 = [70,17],
+  bot_pl2 = [36,10],
+  bot_pl3 = [10, 7]
+}:{
+  bot_pl1: [number,number],
+  bot_pl2: [number,number],
+  bot_pl3: [number,number]
+}) {
   useEffect(() => {
     gsap.to("#main-content", {
       opacity: 1,
@@ -25,16 +33,27 @@ export default function HomePage() {
     <div id="main-content" className="opacity-0">
 
       <div className="relative text-gray-800 h-[50dvh] text-left tracking-wide whitespace-nowrap overflow-hidden">
-        <div className={`absolute bottom-[70%] pl-[17%] pr-[06%] text-4xl`}>
-          一条
-          <Link href='/aboutMe' className="text-blue-400">库</Link>
-          子的网站
+        <div className={`absolute text-4xl`}
+          style = {{
+            bottom: `${bot_pl1[0]}%`,
+            paddingLeft: `${bot_pl1[1]}%`,
+          }}
+        >一条<Link href='/aboutMe' className="text-blue-400">库</Link>子的网站
         </div>
-        <div className={`absolute bottom-[36%] pl-[10%] pr-[10%] text-2xl`}>
-          {/*奏折的形式打开*/}
-          <FoldedPaper className='text-gray-400' 口袋='/gallery'/>和破洞
+        <div className={`absolute text-2xl`}
+          style = {{
+            bottom: `${bot_pl2[0]}%`,
+            paddingLeft: `${bot_pl2[1]}%`,
+          }}
+        >{/*奏折的形式打开*/}<FoldedPaper className='text-gray-400' 口袋='/gallery'/>和破洞
         </div>
-        <div className={`absolute bottom-[10%] pl-[07%] pr-[17%] text-xl`}>磨裤锉</div>
+        <div className={`absolute text-xl`}
+          style = {{
+            bottom: `${bot_pl3[0]}%`,
+            paddingLeft: `${bot_pl3[1]}%`,
+          }}
+        >磨裤锉
+        </div>
       </div>
 
       <div className="relative pl-[06%] h-[50dvh] w-[70%] flex space-x-4 overflow-x-auto scrollbar-hide"
