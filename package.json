@@ -12,6 +12,7 @@
     "colorthief": "^2.6.0",
     "gsap": "^3.13.0",
     "leaflet": "^1.9.4",
+    "nerdamer": "^1.1.13",
     "next": "15.3.3",
     "postgres": "^3.4.7",
     "react": "^19.0.0",
