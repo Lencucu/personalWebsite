@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link';
-import gsap, { Tween as GSAPTween } from "gsap";
+import gsap from "gsap";
+type GSAPTween = gsap.Tween;
 import { useEffect, useState, useRef } from 'react'
 import localFont from 'next/font/local';
 
