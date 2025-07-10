@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import gsap from "gsap";
-type GSAPTween = any;
+type GSAPTween = gsap.core.Tween;
 import { useEffect, useState, useRef } from 'react'
 import localFont from 'next/font/local';
 
@@ -39,13 +39,14 @@ export default function HomePage({
   const initialEffectX = 0.12;
   const [effectX, setEffectX] = useState(initialEffectX);
 
-  function on_Down(e: MouseEvent | TouchEvent) {
-    if(!ticked){
-      const rect = containerRef.current!.getBoundingClientRect();
+  function on_Down(e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) {
+    if (!ticked) {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
       setTicked(true);
-      startXRef.current = (e instanceof TouchEvent)?
-        (e.touches[0].clientX - rect.left):
-        (e.clientX - rect.left);
+      startXRef.current = 'touches' in e
+        ? e.touches[0].clientX - rect.left
+        : e.clientX - rect.left;
     }
   }
 
@@ -62,7 +63,6 @@ export default function HomePage({
       ease: line1Ease,
       overwrite: true,
       paused: true,
-      OnUpdate: ()=>{console.log('xxx')},
     });
     title2tweenRef.current = gsap.to(title2Ref.current!, {
       paddingLeft: '100%', // 👈 目标值
@@ -137,8 +137,8 @@ export default function HomePage({
     >
 
       <div className="relative text-gray-800 h-[50dvh] text-left tracking-wide whitespace-nowrap overflow-hidden"
-        onMouseDown={(e: MouseEvent | TouchEvent) => on_Down(e)}
-        onTouchStart={(e: MouseEvent | TouchEvent) => on_Down(e)}
+        onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => on_Down(e)}
+        onTouchStart={(e: React.TouchEvent<HTMLDivElement>) => on_Down(e)}
       >
         <div
           ref = {title1Ref}
