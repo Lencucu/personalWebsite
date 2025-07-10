@@ -152,7 +152,7 @@ export default function SplitContainer({
         newPoints[1] = { x: evaluatePiecewise(integralLine2  ,x), y: Sp_Ep[1][0][1] };
         newPoints[2] = { x: evaluatePiecewise(integralLine3  ,x), y: Sp_Ep[2][0][1] };
         newPoints[3] = { x: evaluatePiecewise(integralLine4  ,x), y: Sp_Ep[3][0][1] };
-        newPoints[4] = { x: evaluatePiecewise(integralLine5_1,x), y: Sp_Ep[4][0][1] + evaluatePiecewise(integralLine5_2,x) };
+        newPoints[4] = { x: evaluatePiecewise(integralLine5_1,x), y: Sp_Ep[4][0][1] + (integralLine5_2 ? evaluatePiecewise(integralLine5_2, x) : 0) };
         // console.log(x+':')
         // console.log(newPoints);
         return newPoints;
@@ -236,10 +236,10 @@ export default function SplitContainer({
         style={{
           position: 'absolute',
           inset: 0,
-          // clipPath: rightClipPath,
-          // WebkitClipPath: rightClipPath,
-          clipPath: 'url(#rightClipPath)',
-          WebkitClipPath: 'url(#rightClipPath)',
+          clipPath: rightClipPath,
+          WebkitClipPath: rightClipPath,
+          // clipPath: 'url(#rightClipPath)',
+          // WebkitClipPath: 'url(#rightClipPath)',
         }}
       >
         <FrameFront
