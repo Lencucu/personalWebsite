@@ -41,7 +41,7 @@ export default function HomePage({
 
   function on_Down(e: MouseEvent | TouchEvent) {
     if(!ticked){
-      const rect = containerRef.current.getBoundingClientRect();
+      const rect = containerRef.current!.getBoundingClientRect();
       setTicked(true);
       startXRef.current = (e instanceof TouchEvent)?
         (e.touches[0].clientX - rect.left):
@@ -51,12 +51,12 @@ export default function HomePage({
 
 
   useEffect(() => {
-    const rect = containerRef.current.getBoundingClientRect();
+    const rect = containerRef.current!.getBoundingClientRect();
     gsap.to("#main-content", {
       opacity: 1,
       duration: 1,
     });
-    title1tweenRef.current = gsap.to(title1Ref.current, {
+    title1tweenRef.current = gsap.to(title1Ref.current!, {
       paddingLeft: '100%', // 👈 目标值
       duration: 1.5,
       ease: line1Ease,
@@ -64,14 +64,14 @@ export default function HomePage({
       paused: true,
       OnUpdate: ()=>{console.log('xxx')},
     });
-    title2tweenRef.current = gsap.to(title2Ref.current, {
+    title2tweenRef.current = gsap.to(title2Ref.current!, {
       paddingLeft: '100%', // 👈 目标值
       duration: 1.5,
       ease: line2Ease,
       overwrite: true,
       paused: true,
     });
-    title3tweenRef.current = gsap.to(title3Ref.current, {
+    title3tweenRef.current = gsap.to(title3Ref.current!, {
       paddingLeft: '100%', // 👈 目标值
       duration: 1.5,
       ease: line3Ease,
@@ -81,7 +81,7 @@ export default function HomePage({
   }, []);
 
   useEffect(() => {
-    const rect = containerRef.current.getBoundingClientRect();
+    const rect = containerRef.current!.getBoundingClientRect();
 
     function on_Move(e: MouseEvent | TouchEvent) {
       if(!ticked) return;
@@ -89,7 +89,7 @@ export default function HomePage({
         (e.touches[0].clientX - rect.left):
         (e.clientX - rect.left);
 
-      let middleEffectX_sub = (middleX-startXRef.current)/rect.width;
+      let middleEffectX_sub = (middleX-startXRef.current!)/rect.width;
       if(middleEffectX_sub < 0) middleEffectX_sub *= 100;
       let middleEffectX = effectX + middleEffectX_sub;
       if(middleEffectX > 1) setEffectX(1);
@@ -103,7 +103,7 @@ export default function HomePage({
       const endX = (e instanceof TouchEvent)?
         (e.touches[0].clientX - rect.left):
         (e.clientX - rect.left);
-      const effect = (endX-startXRef.current)/rect.width;
+      const effect = (endX-startXRef.current!)/rect.width;
       if(effect>0.1) setEffectX(1);
       else setEffectX(initialEffectX);
 
@@ -123,9 +123,9 @@ export default function HomePage({
   }, [ticked]);
 
   useEffect( () => {
-    gsap.to(title1tweenRef.current,{progress: effectX});
-    gsap.to(title2tweenRef.current,{progress: effectX});
-    gsap.to(title3tweenRef.current,{progress: effectX});
+    gsap.to(title1tweenRef.current!,{progress: effectX});
+    gsap.to(title2tweenRef.current!,{progress: effectX});
+    gsap.to(title3tweenRef.current!,{progress: effectX});
   },[effectX])
 
 
