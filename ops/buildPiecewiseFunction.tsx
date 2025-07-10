@@ -1,4 +1,4 @@
-import nerdamer from 'nerdamer';
+const nerdamer = require('nerdamer');
 import 'nerdamer/Calculus';
 import 'nerdamer/Solve';
 
