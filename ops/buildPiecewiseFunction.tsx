@@ -19,7 +19,7 @@ export function solveToArray(equation: string, variable: string): string[] {
       return str
         .replace(/^\[|\]$/g, '')
         .split(',')
-        .map(s => s.trim());
+        .map((s: string) => s.trim());
     }
     return [];
   } catch {
