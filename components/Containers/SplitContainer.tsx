@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import bezierPoint from '@/ops/bezierPoint'
-import { buildPiecewiseFunction, integratePiecewise, evaluatePiecewise } from '@/ops/buildPiecewiseFunction';
+import { buildPiecewiseFunction, integratePiecewise, evaluatePiecewise, PiecewiseFunction } from '@/ops/buildPiecewiseFunction';
 
 const a1 = 1;
 const b1 = 1;
@@ -92,7 +92,7 @@ export default function SplitContainer({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingPoint, setDraggingPoint] = useState<number | null>(null);
-  const [integralLine5_2, setIntegralLine5_2] = useState<Function | null>(null);
+  const [integralLine5_2, setIntegralLine5_2] = useState<PiecewiseFunction | null>(null);
 
   const Sp_Ep = [// start_point end_point
     [[         28   /2    ,          0                        ],[100,                    0]],

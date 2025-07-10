@@ -3,7 +3,7 @@ import 'nerdamer/Calculus';
 import 'nerdamer/Solve';
 
 type ExprRange = [string, [number, number]];
-type PiecewiseFunction = ExprRange[];
+export type PiecewiseFunction = ExprRange[];
 
 interface PieceSpec {
   expr: string;
