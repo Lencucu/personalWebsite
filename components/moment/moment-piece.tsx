@@ -31,7 +31,7 @@ export default function MomentPiece({content,url,pos}:{
   return (
     <div /*style={{ left: `${5 + pos * 24}vw`}}*/
       id = {`MomentPiece_${pos}`}
-      className={`relative top-[4vh] flex-shrink-0 rounded-2xl border-0 border-gray-300 overflow-hidden h-[36vh] w-[48vh] cursor-pointer opacity-72`}
+      className={`relative top-[3dvh] flex-shrink-0 rounded-2xl border-0 border-gray-300 overflow-hidden h-[36vh] w-[48vh] cursor-pointer opacity-72`}
       onMouseOver={show}
       onMouseOut={hide}
       onTouchStart={show}

@@ -118,14 +118,11 @@ export default function SplitContainer({
   },[]);
   // 监听鼠标拖动更新控制点
   useEffect(() => {
-    // console.log('line2');
-    // console.log(line2);
-    // console.log('integralLine2');
-    // console.log(integralLine2);
     function on_Move(e: MouseEvent | TouchEvent) {
       if (draggingPoint === null || !containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
       let clientX_effect, clientY_effect;
+
+      const rect = containerRef.current.getBoundingClientRect();
       if (e instanceof TouchEvent) {
         clientX_effect = (e.touches[0].clientX - rect.left) / rect.width;
         clientY_effect = (e.touches[0].clientY - rect.top) / rect.height;
@@ -135,19 +132,9 @@ export default function SplitContainer({
       }
       const x = clientX_effect * 100;
       const y = clientY_effect * 100;
-      const trans_effect = clientX_effect - Sp_Ep[draggingPoint][0][0]/100;
+
       setPoints((oldPoints) => {
         const newPoints = [...oldPoints];
-        // newPoints[draggingPoint] = { x, y };
-        const t = Math.min(trans_effect, 1);
-        const bezierPoint0 = bezierPoint(Sp_Ep[0], t);
-        const bezierPoint1 = bezierPoint(Sp_Ep[1], t);
-        const bezierPoint2 = bezierPoint(Sp_Ep[2], t);
-        const bezierPoint3 = bezierPoint(Sp_Ep[3], t);
-        // newPoints[0] = { x: bezierPoint0[0], y: bezierPoint0[1] };
-        // newPoints[1] = { x: bezierPoint1[0], y: bezierPoint1[1] };
-        // newPoints[2] = { x: bezierPoint2[0], y: bezierPoint2[1] };
-        // newPoints[3] = { x: bezierPoint3[0], y: bezierPoint3[1] };
         newPoints[0] = { x: evaluatePiecewise(integralLine1  ,x), y: Sp_Ep[0][0][1] };
         newPoints[1] = { x: evaluatePiecewise(integralLine2  ,x), y: Sp_Ep[1][0][1] };
         newPoints[2] = { x: evaluatePiecewise(integralLine3  ,x), y: Sp_Ep[2][0][1] };
@@ -158,9 +145,11 @@ export default function SplitContainer({
         return newPoints;
       });
     }
+
     function on_Up() {
       setDraggingPoint(null);
     }
+
     window.addEventListener('mousemove', on_Move);
     window.addEventListener('mouseup', on_Up);
     window.addEventListener('touchmove', on_Move);
@@ -243,9 +232,18 @@ export default function SplitContainer({
         }}
       >
         <FrameFront
-          bot_pl1 = {bot_pl1}
-          bot_pl2 = {bot_pl2}
-          bot_pl3 = {bot_pl3}
+          // bot_pl1 = {bot_pl1}
+          // bot_pl2 = {bot_pl2}
+          // bot_pl3 = {bot_pl3}
+          bot_pl1 = {[bot_pl1[0],0]}
+          bot_pl2 = {[bot_pl2[0],0]}
+          bot_pl3 = {[bot_pl3[0],0]}
+          onSwipe = {(effect: number)=>{
+            // console.log(effect);
+          }}
+          // bot_pl1 = {[bot_pl1[0],points[1].x+5]}
+          // bot_pl2 = {[bot_pl2[0],points[2].x+5]}
+          // bot_pl3 = {[bot_pl3[0],points[3].x+5]}
         />
       </div>
 
