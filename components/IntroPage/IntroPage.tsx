@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import gsap from "gsap";
-type GSAPTween = gsap.Tween;
+type GSAPTween = any;
 import { useEffect, useState, useRef } from 'react'
 import localFont from 'next/font/local';
 
