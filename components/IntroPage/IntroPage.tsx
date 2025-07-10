@@ -101,7 +101,7 @@ export default function HomePage({
       if(!ticked) return;
       else setTicked(false);
       const endX = (e instanceof TouchEvent)?
-        (e.touches[0].clientX - rect.left):
+        (e.changedTouches[0].clientX - rect.left):
         (e.clientX - rect.left);
       const effect = (endX-startXRef.current!)/rect.width;
       if(effect>0.1) setEffectX(1);
