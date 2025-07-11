@@ -33,9 +33,9 @@ export default function HomePage({
   const title3Ref = useRef<HTMLDivElement>(null);
   const [ticked, setTicked] = useState(false);
   const startXRef = useRef<number | null>(null);
-  const title1tweenRef = useRef<GSAPTween | null>(null);
-  const title2tweenRef = useRef<GSAPTween | null>(null);
-  const title3tweenRef = useRef<GSAPTween | null>(null);
+  const title1TweenRef = useRef<GSAPTween | null>(null);
+  const title2TweenRef = useRef<GSAPTween | null>(null);
+  const title3TweenRef = useRef<GSAPTween | null>(null);
   const initialEffectX = 0.12;
   const [effectX, setEffectX] = useState(initialEffectX);
 
@@ -52,28 +52,27 @@ export default function HomePage({
 
 
   useEffect(() => {
-    const rect = containerRef.current!.getBoundingClientRect();
     gsap.to("#main-content", {
       opacity: 1,
       duration: 1,
     });
-    title1tweenRef.current = gsap.to(title1Ref.current!, {
+    title1TweenRef.current = gsap.to(title1Ref.current!, {
       paddingLeft: '100%', // 👈 目标值
-      duration: 1.5,
+      duration: 2.5,
       ease: line1Ease,
       overwrite: true,
       paused: true,
     });
-    title2tweenRef.current = gsap.to(title2Ref.current!, {
+    title2TweenRef.current = gsap.to(title2Ref.current!, {
       paddingLeft: '100%', // 👈 目标值
-      duration: 1.5,
+      duration: 2.5,
       ease: line2Ease,
       overwrite: true,
       paused: true,
     });
-    title3tweenRef.current = gsap.to(title3Ref.current!, {
+    title3TweenRef.current = gsap.to(title3Ref.current!, {
       paddingLeft: '100%', // 👈 目标值
-      duration: 1.5,
+      duration: 2.5,
       ease: line3Ease,
       overwrite: true,
       paused: true,
@@ -82,7 +81,34 @@ export default function HomePage({
 
   useEffect(() => {
     const rect = containerRef.current!.getBoundingClientRect();
+    function on_Up(e: MouseEvent | TouchEvent) {
+      if(!ticked) return;
+      else setTicked(false);
+      const endX = (e instanceof TouchEvent)?
+        (e.changedTouches[0].clientX - rect.left):
+        (e.clientX - rect.left);
+      const effect = (endX-startXRef.current!)/rect.width;
+      if(effect>0.1) setEffectX(1);
+      else setEffectX(initialEffectX);
+    }
 
+    window.addEventListener('mouseup', on_Up);
+    window.addEventListener('touchend', on_Up);
+    return () => {
+      window.removeEventListener('mouseup', on_Up);
+      window.removeEventListener('touchend', on_Up);
+    };
+  }, [ticked]);
+
+  useEffect( () => {
+    onSwipe?.(effectX);
+    gsap.to(title1TweenRef.current!,{progress: effectX});
+    gsap.to(title2TweenRef.current!,{progress: effectX});
+    gsap.to(title3TweenRef.current!,{progress: effectX});
+  },[effectX])
+
+  useEffect( () => {
+    const rect = containerRef.current!.getBoundingClientRect();
     function on_Move(e: MouseEvent | TouchEvent) {
       if(!ticked) return;
       const middleX = (e instanceof TouchEvent)?
@@ -97,36 +123,13 @@ export default function HomePage({
       else setEffectX(middleEffectX);
     }
 
-    function on_Up(e: MouseEvent | TouchEvent) {
-      if(!ticked) return;
-      else setTicked(false);
-      const endX = (e instanceof TouchEvent)?
-        (e.changedTouches[0].clientX - rect.left):
-        (e.clientX - rect.left);
-      const effect = (endX-startXRef.current!)/rect.width;
-      if(effect>0.1) setEffectX(1);
-      else setEffectX(initialEffectX);
-
-      onSwipe?.(effect);
-    }
-
     window.addEventListener('mousemove', on_Move);
-    window.addEventListener('mouseup', on_Up);
     window.addEventListener('touchmove', on_Move);
-    window.addEventListener('touchend', on_Up);
     return () => {
       window.removeEventListener('mousemove', on_Move);
-      window.removeEventListener('mouseup', on_Up);
       window.removeEventListener('touchmove', on_Move);
-      window.removeEventListener('touchend', on_Up);
-    };
-  }, [ticked]);
-
-  useEffect( () => {
-    gsap.to(title1tweenRef.current!,{progress: effectX});
-    gsap.to(title2tweenRef.current!,{progress: effectX});
-    gsap.to(title3tweenRef.current!,{progress: effectX});
-  },[effectX])
+    }
+  },[ticked, effectX]);
 
 
   return (
@@ -146,7 +149,7 @@ export default function HomePage({
           className = {`absolute text-4xl`}
           style = {{
             bottom: `${bot_pl1[0]}%`,
-            paddingLeft: `${bot_pl1[1]}%`,
+            // paddingLeft: `${bot_pl1[1]}%`,
           }}
         >一条<Link href='/aboutMe' className="text-blue-400">库</Link>子的网站
         </div>
@@ -156,7 +159,7 @@ export default function HomePage({
           className = {`absolute text-2xl`}
           style = {{
             bottom: `${bot_pl2[0]}%`,
-            paddingLeft: `${bot_pl2[1]}%`,
+            // paddingLeft: `${bot_pl2[1]}%`,
           }}
         >{/*奏折的形式打开*/}<FoldedPaper className='text-gray-400' 口袋='/gallery'/>和破洞
         </div>
@@ -166,7 +169,7 @@ export default function HomePage({
           className = {`absolute text-xl`}
           style = {{
             bottom: `${bot_pl3[0]}%`,
-            paddingLeft: `${bot_pl3[1]}%`,
+            // paddingLeft: `${bot_pl3[1]}%`,
           }}
         >磨裤锉
         </div>

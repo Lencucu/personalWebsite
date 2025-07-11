@@ -9,7 +9,7 @@ const line1 = buildPiecewiseFunction(
   { expr: `${whole_k1}*(0)`, len: 0.35, area: [0, 1] },
   { expr: `${whole_k1}*(-${b1}*x^2)`, len: 0.15, area: [null, 5] }
 );
-const integralLine1 = integratePiecewise([0,1],line1);
+export const integralLine1 = integratePiecewise([0,1],line1);
 
 const b2 = 1;
 const c2 = 1;
@@ -22,7 +22,7 @@ const line2 = buildPiecewiseFunction(
   { expr: `${whole_k2}*(0)`, len: 0.41, area: [0, 1] },
   { expr: `${whole_k2}*(-${d2}*x^2)`, len: 0.13, area: [null, 5] }
 );
-const integralLine2 = integratePiecewise([0,1],line2);
+export const integralLine2 = integratePiecewise([0,1],line2);
 
 const a3 = 5;
 const b3 = 0.4;
@@ -35,7 +35,7 @@ const line3 = buildPiecewiseFunction(
   { expr: `${whole_k3}*(0)`, len: 0.49, area: [0, 1] },
   { expr: `${whole_k3}*(-${c3}*x^2)`, len: 0.1, area: [null, 5] }
 );
-const integralLine3 = integratePiecewise([0,1],line3);
+export const integralLine3 = integratePiecewise([0,1],line3);
 
 const a4 = 3.7;
 const b4 = 0.1;
@@ -48,7 +48,7 @@ const line4 = buildPiecewiseFunction(
   { expr: `${whole_k4}*(0)`, len: 0.425, area: [0, 1] },
   { expr: `${whole_k4}*(-${c4}*x^2)`, len: 0.09, area: [null, 5] }
 );
-const integralLine4 = integratePiecewise([0,1],line4);
+export const integralLine4 = integratePiecewise([0,1],line4);
 
 const a5_1 = 0.5;
 const b5_1 = 1;
@@ -59,7 +59,7 @@ const line5_1 = buildPiecewiseFunction(
   { expr: `${whole_k5_1}*(${a5_1}*x-${b5_1}*x^3)`, len: 0.35, area: [null, null] },
   { expr: `${whole_k5_1}*(0)`, len: 0.45, area: [0, 1] },
 );
-const integralLine5_1 = integratePiecewise([0,1],line5_1);
+export const integralLine5_1 = integratePiecewise([0,1],line5_1);
 
 const a5_2 = 0.5;
 const b5_2 = 1;
@@ -74,13 +74,13 @@ const line5_2 = buildPiecewiseFunction(
 );
 
 export function line1Ease(t: number): number {
-  return evaluatePiecewise(integralLine1, t);
-}
-
-export function line2Ease(t: number): number {
   return evaluatePiecewise(integralLine2, t);
 }
 
-export function line3Ease(t: number): number {
+export function line2Ease(t: number): number {
   return evaluatePiecewise(integralLine3, t);
+}
+
+export function line3Ease(t: number): number {
+  return evaluatePiecewise(integralLine4, t);
 }

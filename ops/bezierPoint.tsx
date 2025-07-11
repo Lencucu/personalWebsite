@@ -18,3 +18,19 @@ export default function bezierPoint(controlPoints: number[][], t: number): numbe
     return sum;
   });
 }
+
+
+function generateRightPath(points: { x: number; y: number }[]) {
+  const reversed = [...points].reverse();
+
+  let d = `M 1 0 L 1 1`;
+
+  for (let i = 0; i < reversed.length - 1; i += 2) {
+    const p0 = reversed[i];
+    const p1 = reversed[i + 1];
+    d += ` Q ${p0.x/100} ${p0.y/100}, ${p1.x/100} ${p1.y/100}`;
+  }
+
+  d += ` Z`;
+  return d;
+}
