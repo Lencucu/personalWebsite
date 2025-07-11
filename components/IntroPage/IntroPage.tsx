@@ -139,15 +139,15 @@ export default function HomePage({
   },[ticked, lastMoveLen]);
 
   useEffect( () => {
-    let distn = effectX - initialEffectX;
+    let distn = effectX! - initialEffectX;
     if(distn > 0)
       distn = distn/(1 - initialEffectX)*(1 - leftSideWidth_distn[0]);
     else
       distn = distn/initialEffectX*leftSideWidth_distn[0];
     onSwipe?.(leftSideWidth_distn[0] + distn);
-    gsap.to(title1TweenRef.current!,{progress: effectX});
-    gsap.to(title2TweenRef.current!,{progress: effectX});
-    gsap.to(title3TweenRef.current!,{progress: effectX});
+    gsap.to(title1TweenRef.current!,{progress: effectX!});
+    gsap.to(title2TweenRef.current!,{progress: effectX!});
+    gsap.to(title3TweenRef.current!,{progress: effectX!});
   },[effectX])
 
 
