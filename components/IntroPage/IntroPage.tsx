@@ -127,7 +127,7 @@ export default function HomePage({
       if(middleEffectX > 1) setEffectX(1);
       else if(middleEffectX < 0) setEffectX(0);
       else setEffectX(middleEffectX);
-      setLastMoveLen(middleEffectX - effectX);
+      setLastMoveLen(middleEffectX - effectX!);
     }
 
     window.addEventListener('mousemove', on_Move);
