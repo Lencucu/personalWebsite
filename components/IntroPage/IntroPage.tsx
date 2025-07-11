@@ -122,7 +122,7 @@ export default function HomePage({
         (e.touches[0].clientX - rect.left):
         (e.clientX - rect.left);
 
-      let middleEffectX = effectXRef_start.current + (middleX-startXRef.current!)/rect.width;
+      let middleEffectX = effectXRef_start.current! + (middleX-startXRef.current!)/rect.width;
       // console.log(middleEffectX - effectXRef_start.current);
       if(middleEffectX > 1) setEffectX(1);
       else if(middleEffectX < 0) setEffectX(0);
