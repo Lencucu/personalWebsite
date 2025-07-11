@@ -66,7 +66,7 @@ const b5_2 = 1;
 const c5_2 = 1;
 const d5_2 = 1;
 const whole_k5_2 = 1;
-const line5_2 = buildPiecewiseFunction(
+export const line5_2 = buildPiecewiseFunction(
   [0, 1],0,
   { expr: `${whole_k5_2}*(${a5_2}*x-${b5_2}*x^3)`, len: 0.4, area: [null, null] },
   { expr: `${whole_k5_2}*(${c5_2}*x)`, len: 0.2, area: [0, 1] },

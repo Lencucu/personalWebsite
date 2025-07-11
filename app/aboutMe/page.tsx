@@ -1,6 +1,12 @@
 // AboutMe.jsx
 // import { Mail, User } from 'lucide-react'; // 图标库
 import { useMemo } from 'react';
+import localFont from 'next/font/local';
+
+const smileySans = localFont({
+  src: './../../public/fonts/SmileySans-Oblique.ttf.woff2',
+  variable: '--font-smileySans',
+})
 
 export default function Page() {
   const birthday = new Date('2000-10-21'); // 🎂 修改你的生日
@@ -15,7 +21,7 @@ export default function Page() {
   }, [birthday]);
 
   return (
-    <section className="border-1 border-black max-w-md mx-auto bg-white shadow-md rounded-2xl p-6 flex flex-col items-center space-y-4">
+    <section className={`${smileySans.className} border-1 border-black max-w-md mx-auto bg-white shadow-md rounded-2xl p-6 flex flex-col items-center space-y-4`}>
       <img
         src="/images/aboutMe/lc.svg"
         alt="avatar"

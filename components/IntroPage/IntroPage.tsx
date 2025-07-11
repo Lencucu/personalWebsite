@@ -20,11 +20,15 @@ export default function HomePage({
   bot_pl1 = [70,17],
   bot_pl2 = [36,10],
   bot_pl3 = [10, 7],
+  leftSideWidth_distn = [0.12,0.05],
+  shouleGoBack = false,
   onSwipe,
 }:{
   bot_pl1: [number,number],
   bot_pl2: [number,number],
   bot_pl3: [number,number],
+  leftSideWidth_distn: [number,number],
+  shouleGoBack: boolean,
   onSwipe?: (ratio: number) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -36,8 +40,12 @@ export default function HomePage({
   const title1TweenRef = useRef<GSAPTween | null>(null);
   const title2TweenRef = useRef<GSAPTween | null>(null);
   const title3TweenRef = useRef<GSAPTween | null>(null);
-  const initialEffectX = 0.12;
-  const [effectX, setEffectX] = useState(initialEffectX);
+
+  const initialEffectX = leftSideWidth_distn[0] + leftSideWidth_distn[1];
+  const [effectX, setEffectX] = useState<number | null>(null);
+  const effectXRef_start = useRef<number | null>(null);
+
+  const [lastMoveLen, setLastMoveLen] = useState<number>(0);
 
   function on_Down(e: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) {
     if (!ticked) {
@@ -47,11 +55,17 @@ export default function HomePage({
       startXRef.current = 'touches' in e
         ? e.touches[0].clientX - rect.left
         : e.clientX - rect.left;
+      effectXRef_start.current = effectX;
     }
   }
 
+  useEffect( () =>{
+    if(shouleGoBack)
+      setEffectX(initialEffectX);
+  });
 
-  useEffect(() => {
+  useEffect( () => {
+    setEffectX(initialEffectX);
     gsap.to("#main-content", {
       opacity: 1,
       duration: 1,
@@ -79,7 +93,7 @@ export default function HomePage({
     });
   }, []);
 
-  useEffect(() => {
+  useEffect( () => {
     const rect = containerRef.current!.getBoundingClientRect();
     function on_Up(e: MouseEvent | TouchEvent) {
       if(!ticked) return;
@@ -88,7 +102,7 @@ export default function HomePage({
         (e.changedTouches[0].clientX - rect.left):
         (e.clientX - rect.left);
       const effect = (endX-startXRef.current!)/rect.width;
-      if(effect>0.1) setEffectX(1);
+      if(lastMoveLen>0 && effect>0.1) setEffectX(1);
       else setEffectX(initialEffectX);
     }
 
@@ -101,13 +115,6 @@ export default function HomePage({
   }, [ticked]);
 
   useEffect( () => {
-    onSwipe?.(effectX);
-    gsap.to(title1TweenRef.current!,{progress: effectX});
-    gsap.to(title2TweenRef.current!,{progress: effectX});
-    gsap.to(title3TweenRef.current!,{progress: effectX});
-  },[effectX])
-
-  useEffect( () => {
     const rect = containerRef.current!.getBoundingClientRect();
     function on_Move(e: MouseEvent | TouchEvent) {
       if(!ticked) return;
@@ -115,12 +122,12 @@ export default function HomePage({
         (e.touches[0].clientX - rect.left):
         (e.clientX - rect.left);
 
-      let middleEffectX_sub = (middleX-startXRef.current!)/rect.width;
-      if(middleEffectX_sub < 0) middleEffectX_sub *= 100;
-      let middleEffectX = effectX + middleEffectX_sub;
+      let middleEffectX = effectXRef_start.current + (middleX-startXRef.current!)/rect.width;
+      // console.log(middleEffectX - effectXRef_start.current);
       if(middleEffectX > 1) setEffectX(1);
       else if(middleEffectX < 0) setEffectX(0);
       else setEffectX(middleEffectX);
+      setLastMoveLen(middleEffectX - effectX);
     }
 
     window.addEventListener('mousemove', on_Move);
@@ -129,7 +136,19 @@ export default function HomePage({
       window.removeEventListener('mousemove', on_Move);
       window.removeEventListener('touchmove', on_Move);
     }
-  },[ticked, effectX]);
+  },[ticked, lastMoveLen]);
+
+  useEffect( () => {
+    let distn = effectX - initialEffectX;
+    if(distn > 0)
+      distn = distn/(1 - initialEffectX)*(1 - leftSideWidth_distn[0]);
+    else
+      distn = distn/initialEffectX*leftSideWidth_distn[0];
+    onSwipe?.(leftSideWidth_distn[0] + distn);
+    gsap.to(title1TweenRef.current!,{progress: effectX});
+    gsap.to(title2TweenRef.current!,{progress: effectX});
+    gsap.to(title3TweenRef.current!,{progress: effectX});
+  },[effectX])
 
 
   return (
