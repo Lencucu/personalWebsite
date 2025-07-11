@@ -23,10 +23,10 @@ export default function SplitContainer({
 }:{
   FrameFront: React.ComponentType<any>,
   FrameBack: React.ReactNode,
-  bot_pl1: [number,number],
-  bot_pl2: [number,number],
-  bot_pl3: [number,number],
-  leftSideWidth_distn: [number,number],
+  bot_pl1?: [number,number],
+  bot_pl2?: [number,number],
+  bot_pl3?: [number,number],
+  leftSideWidth_distn?: [number,number],
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingPoint, setDraggingPoint] = useState<number | null>(null);

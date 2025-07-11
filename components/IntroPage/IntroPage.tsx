@@ -22,13 +22,13 @@ export default function HomePage({
   bot_pl3 = [10, 7],
   leftSideWidth_distn = [0.12,0.05],
   shouleGoBack = false,
-  onSwipe,
+  onSwipe = ()=>{},
 }:{
-  bot_pl1: [number,number],
-  bot_pl2: [number,number],
-  bot_pl3: [number,number],
-  leftSideWidth_distn: [number,number],
-  shouleGoBack: boolean,
+  bot_pl1?: [number,number],
+  bot_pl2?: [number,number],
+  bot_pl3?: [number,number],
+  leftSideWidth_distn?: [number,number],
+  shouleGoBack?: boolean,
   onSwipe?: (ratio: number) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
