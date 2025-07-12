@@ -5,6 +5,9 @@ import 'nerdamer/Solve';
 type ExprRange = [string, [number, number]];
 export type PiecewiseFunction = ExprRange[];
 
+type FnRange = { fn: (x: number) => number; range: [number, number] };
+export type FnPiecewiseFunction = FnRange[];
+
 interface PieceSpec {
   expr: string;
   len: number;
@@ -188,6 +191,85 @@ export function evaluatePiecewise(
   try {
     if (x < a1) return nerdamer(firstExpr).evaluate({ x: a1 }).valueOf();
     if (x > bN) return nerdamer(lastExpr).evaluate({ x: bN }).valueOf();
+  } catch {
+    return NaN;
+  }
+
+  return NaN;
+}
+
+
+
+
+/** 将 nerdamer 表达式字符串转换为 JS 函数 */
+function nerdamerToFunction(exprStr: string, variables: string[]) {
+  const expr = nerdamer(exprStr).toString();
+
+  const jsExpr = expr
+    .replace(/\^/g, '**')
+    .replace(/\b(sin|cos|tan|log|sqrt|abs|exp)\b/g, 'Math.$1');
+
+  return new Function(...variables, `return ${jsExpr};`);
+}
+
+/** 构建已积分、范围归一化后的可执行分段函数 */
+export function integratePiecewiseAsFunctions(
+  [rangeStart, rangeEnd]: [number, number],
+  piecewise: PiecewiseFunction
+): FnPiecewiseFunction {
+  const integrals: PiecewiseFunction = [];
+  let prevEndValue = 0;
+
+  for (const [expr, [a, b]] of piecewise) {
+    const F = nerdamer(`integrate(${expr}, x)`).toString();
+    const Fa = nerdamer(F).evaluate({ x: a }).valueOf();
+    const C = prevEndValue - Fa;
+    const fullExpr = `(${F}) + (${C})`;
+    prevEndValue = nerdamer(fullExpr).evaluate({ x: b }).valueOf();
+    integrals.push([fullExpr, [a, b]]);
+  }
+
+  const rawStart = nerdamer(integrals[0][0]).evaluate({ x: integrals[0][1][0] }).valueOf();
+  const rawEnd = nerdamer(integrals.at(-1)![0]).evaluate({ x: integrals.at(-1)![1][1] }).valueOf();
+  const rawSpan = rawEnd - rawStart;
+  const targetSpan = rangeEnd - rangeStart;
+  const scale = targetSpan / rawSpan;
+
+  const adjusted = integrals.map(([expr, [a, b]]) => {
+    const scaledExpr = `(${scale})*(${expr}) + (${rangeStart - scale * rawStart})`;
+    const fn = nerdamerToFunction(scaledExpr, ['x']);
+    return { fn, range: [a, b] as [number, number] };
+  });
+
+  return adjusted;
+}
+
+
+
+/** 执行预编译的 Piecewise 函数列表 */
+export function evaluatePiecewiseFunctions(
+  funcs: FnPiecewiseFunction,
+  x: number
+): number {
+  if (!funcs || funcs.length === 0) return NaN;
+
+  for (const { fn, range: [a, b] } of funcs) {
+    if (x >= a && x <= b) {
+      try {
+        return fn(x);
+      } catch {
+        return NaN;
+      }
+    }
+  }
+
+  // 超出范围，使用两端插值
+  const first = funcs[0];
+  const last = funcs.at(-1)!;
+
+  try {
+    if (x < first.range[0]) return first.fn(first.range[0]);
+    if (x > last.range[1]) return last.fn(last.range[1]);
   } catch {
     return NaN;
   }

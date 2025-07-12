@@ -4,17 +4,12 @@ import Link from 'next/link';
 import gsap from "gsap";
 type GSAPTween = gsap.core.Tween;
 import { useEffect, useState, useRef } from 'react'
-import localFont from 'next/font/local';
 
 import '@/app/global.css';
 import FoldedPaper from '@/components/foldedPaper/foldedPaper';
 import Moments from '@/components/moment/moment';
 import { line1Ease, line2Ease, line3Ease } from '@/ops/lines';
-
-const smileySans = localFont({
-  src: './../../public/fonts/SmileySans-Oblique.ttf.woff2',
-  variable: '--font-smileySans',
-})
+import { titleBlack } from '@/app/fonts';
 
 export default function HomePage({
   bot_pl1 = [70,17],
@@ -158,7 +153,7 @@ export default function HomePage({
       className="opacity-0"
     >
 
-      <div className="relative text-gray-800 h-[50dvh] text-left tracking-wide whitespace-nowrap overflow-hidden"
+      <div className={`${titleBlack.className} relative text-gray-800 h-[50dvh] text-left tracking-wide whitespace-nowrap overflow-hidden`}
         onMouseDown={(e: React.MouseEvent<HTMLDivElement>) => on_Down(e)}
         onTouchStart={(e: React.TouchEvent<HTMLDivElement>) => on_Down(e)}
       >
@@ -202,7 +197,7 @@ export default function HomePage({
         <Moments />
       </div>
 
-      <div className={`absolute ${smileySans.className} pl-[06%] bottom-[01.5%] text-gray-200 space-x-1 flex`}>
+      <div className={`absolute pl-[06%] bottom-[01.5%] text-gray-200 space-x-1 flex`}>
         <span>Tests</span><span>|</span>
         <Link href='/test'>page</Link>
         <a href='/game_test/what.html'>game</a>

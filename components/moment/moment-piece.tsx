@@ -1,12 +1,6 @@
 'use client'
 
 import gsap from 'gsap';
-import localFont from 'next/font/local';
-
-const smileySans = localFont({
-  src: './../../public/fonts/SmileySans-Oblique.ttf.woff2',
-  variable: '--font-smileySans',
-})
 
 export default function MomentPiece({content,url,pos}:{
     content:string,
@@ -49,7 +43,7 @@ export default function MomentPiece({content,url,pos}:{
           if (fallback) fallback.classList.add('hidden');
         }}
       ></iframe>
-      <div className={`${smileySans.className} absolute text-center inset-0 flex items-center justify-center bg-gray-100 text-gray-500 iframe-fallback`+pos}>
+      <div className={`absolute text-center inset-0 flex items-center justify-center bg-gray-100 text-gray-500 iframe-fallback`+pos}>
         {content}
       </div>
       <a

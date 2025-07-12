@@ -4,13 +4,13 @@ import { useState, useRef, useEffect } from 'react';
 import gsap from "gsap";
 type GSAPTween = gsap.core.Tween;
 import bezierPoint from '@/ops/bezierPoint'
-import { buildPiecewiseFunction, integratePiecewise, evaluatePiecewise, PiecewiseFunction } from '@/ops/buildPiecewiseFunction';
+import { buildPiecewiseFunction, integratePiecewiseAsFunctions, /*integratePiecewise, evaluatePiecewise, */evaluatePiecewiseFunctions, FnPiecewiseFunction/*, PiecewiseFunction*/ } from '@/ops/buildPiecewiseFunction';
 import {
-  integralLine1,
-  integralLine2,
-  integralLine3,
-  integralLine4,
-  integralLine5_1,
+  integralLine1Function,
+  integralLine2Function,
+  integralLine3Function,
+  integralLine4Function,
+  integralLine5_1Function,
   line5_2 } from '@/ops/lines';
 
 export default function SplitContainer({
@@ -30,7 +30,7 @@ export default function SplitContainer({
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [draggingPoint, setDraggingPoint] = useState<number | null>(null);
-  const [integralLine5_2, setIntegralLine5_2] = useState<PiecewiseFunction | null>(null);
+  const [integralLine5_2Function, setIntegralLine5_2Function] = useState<FnPiecewiseFunction | null>(null);
   const animProgress = useRef({ progress: 0 });
   const pointsTweenRef = useRef<GSAPTween | null>(null);
   const [shouleGoBack, setShouleGoBack] = useState<boolean>(false);
@@ -58,10 +58,11 @@ export default function SplitContainer({
   },[shouleGoBack]);
 
   useEffect(() => {
-    setIntegralLine5_2(integratePiecewise([0,(100-(100-bot_pl3[0]-5)/2)/100*7/9],line5_2));
+    // setIntegralLine5_2(integratePiecewise([0,(100-(100-bot_pl3[0]-5)/2)/100*7/9],line5_2));
+    setIntegralLine5_2Function(integratePiecewiseAsFunctions([0,(100-(100-bot_pl3[0]-5)/2)/100*7/9],line5_2));
   },[]);
   useEffect(() => {
-    if(!integralLine5_2) return;
+    if(!integralLine5_2Function) return;
     // GSAP 动画，从0到1，持续2秒
     pointsTweenRef.current = gsap.to(animProgress.current, {
       progress: 1,
@@ -73,17 +74,17 @@ export default function SplitContainer({
         const p = this.progress(); // 当前进度 0~1
         setPoints((oldPoints) => {
           const newPoints = [...oldPoints];
-          newPoints[0].x = evaluatePiecewise(integralLine1  ,p)*100;
-          newPoints[1].x = evaluatePiecewise(integralLine2  ,p)*100;
-          newPoints[2].x = evaluatePiecewise(integralLine3  ,p)*100;
-          newPoints[3].x = evaluatePiecewise(integralLine4  ,p)*100;
-          newPoints[4] = { x: evaluatePiecewise(integralLine5_1,p)*100, y: valuesY[4] + evaluatePiecewise(integralLine5_2, p)*100 };
+          newPoints[0].x = evaluatePiecewiseFunctions(integralLine1Function  ,p)*100;
+          newPoints[1].x = evaluatePiecewiseFunctions(integralLine2Function  ,p)*100;
+          newPoints[2].x = evaluatePiecewiseFunctions(integralLine3Function  ,p)*100;
+          newPoints[3].x = evaluatePiecewiseFunctions(integralLine4Function  ,p)*100;
+          newPoints[4] = { x: evaluatePiecewiseFunctions(integralLine5_1Function,p)*100, y: valuesY[4] + evaluatePiecewiseFunctions(integralLine5_2Function, p)*100 };
           return newPoints;
         });
       },
     });
     gsap.to(pointsTweenRef.current,{progress: leftSideWidth_distn[0]});
-  },[integralLine5_2]);
+  },[integralLine5_2Function]);
 
   return (
     <div
