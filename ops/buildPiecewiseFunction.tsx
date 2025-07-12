@@ -237,7 +237,7 @@ export function integratePiecewiseAsFunctions(
 
   const adjusted = integrals.map(([expr, [a, b]]) => {
     const scaledExpr = `(${scale})*(${expr}) + (${rangeStart - scale * rawStart})`;
-    const fn = nerdamerToFunction(scaledExpr, ['x']);
+    const fn = nerdamerToFunction(scaledExpr, ['x']) as (x: number) => number;
     return { fn, range: [a, b] as [number, number] };
   });
 
