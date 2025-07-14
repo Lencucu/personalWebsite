@@ -106,18 +106,34 @@ export default function SplitContainer({
           vectorEffect="non-scaling-stroke"
         />
         <defs>
-          <clipPath id="leftClipPath" clipPathUnits="objectBoundingBox">
+          {/*<path d={generateRightPath(points)} />*/}
+          {/*<path d={generateRightPath(points)} />*/}
+{/*          <clipPath id="leftCut" clipPathUnits="objectBoundingBox">
             <polygon points = {`0 0, ${
               points.map((p) => `${p.x/100} ${p.y/100}`).join(', ')
             } 0 1`}/>
-            {/*<path d={generateRightPath(points)} />*/}
           </clipPath>
-          <clipPath id="rightClipPath" clipPathUnits="objectBoundingBox">
-            <polygon points = {`100 0, 100 100, ${
+          <clipPath id="rightCut" clipPathUnits="objectBoundingBox">
+            <polygon points = {`1 0, 1 1, ${
               points.map(p => `${p.x/100} ${p.y/100}`).reverse().join(', ')
             }`}/>
-            {/*<path d={generateRightPath(points)} />*/}
-          </clipPath>
+          </clipPath>*/}
+          <mask id="leftCut" maskContentUnits="objectBoundingBox"/* maskUnits="objectBoundingBox"*/>
+            <polygon
+              points={`0 0, ${points.map((p) => `${p.x / 100} ${p.y / 100}`).join(', ')}, 0 1`}
+              fill="white"
+            />
+          </mask>
+
+          <mask id="rightCut" maskContentUnits="objectBoundingBox"/* maskUnits="objectBoundingBox"*/>
+            <polygon
+              points={`1 0, 1 1, ${points
+                .map((p) => `${p.x / 100} ${p.y / 100}`)
+                .reverse()
+                .join(', ')}`}
+              fill="white"
+            />
+          </mask>
         </defs>
       </svg>
 
@@ -127,8 +143,10 @@ export default function SplitContainer({
         style={{
           position: 'absolute',
           inset: 0,
-          clipPath: 'url(#leftClipPath)',
-          WebkitClipPath: 'url(#leftClipPath)',
+          // clipPath: 'url(#leftCut)',
+          // WebkitClipPath: 'url(#leftCut)',
+          mask: 'url(#leftCut)',
+          WebkitMask: 'url(#leftCut)',
         }}
       >
         {FrameBack}
@@ -145,7 +163,7 @@ export default function SplitContainer({
           hover:bg-blue-700 
           active:bg-blue-800
           transition
-          z-10
+          z-20
           "
         aria-label="圆形按钮"
         onClick={()=>setShouleGoBack(true)}
@@ -159,8 +177,10 @@ export default function SplitContainer({
         style={{
           position: 'absolute',
           inset: 0,
-          clipPath: 'url(#rightClipPath)',
-          WebkitClipPath: 'url(#rightClipPath)',
+          // clipPath: 'url(#rightCut)',
+          // WebkitClipPath: 'url(#rightCut)',
+          mask: 'url(#rightCut)',
+          WebkitMask: 'url(#rightCut)',
         }}
         className = "z-10"
       >
