@@ -8,7 +8,7 @@ import { useEffect, useState, useRef } from 'react'
 import '@/app/global.css';
 import FoldedPaper from '@/components/foldedPaper/foldedPaper';
 import Moments from '@/components/moment/moment';
-import { line1Ease, line2Ease, line3Ease } from '@/ops/lines';
+import { line1Ease, line2Ease, line3Ease } from '@/lib/mathematicalLib/lines';
 import { titleBlack } from '@/app/fonts';
 
 export default function HomePage({
