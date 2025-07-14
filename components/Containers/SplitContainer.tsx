@@ -95,7 +95,7 @@ export default function SplitContainer({
         viewBox="0 0 100 100"
         preserveAspectRatio="none"
         // preserveAspectRatio="xMidYMid slice"
-        className="absolute top-0 left-0 w-[100dvw] h-[100dvh] pointer-events-none z-10"
+        className="absolute top-0 left-0 w-[100dvw] h-[100dvh] pointer-events-none z-20"
       >
         <polyline
           points={points.map((p) => `${p.x},${p.y}`).join(' ')}
@@ -162,6 +162,7 @@ export default function SplitContainer({
           clipPath: 'url(#rightClipPath)',
           WebkitClipPath: 'url(#rightClipPath)',
         }}
+        className = "z-10"
       >
         <FrameFront
           bot_pl1 = {bot_pl1}
