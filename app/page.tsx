@@ -1,6 +1,6 @@
-import MainMapCom from 'C/component/map/main'
-import IntroPage from 'C/component/IntroPage/IntroPage'
-import SplitContainer from 'C/ui/SplitContainer'
+import MainMapCom from '~/component/map/main'
+import IntroPage from '~/component/IntroPage/IntroPage'
+import SplitContainer from '~/ui/SplitContainer'
 
 export default function Origin() {
   return <SplitContainer
