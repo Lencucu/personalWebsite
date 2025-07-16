@@ -189,10 +189,10 @@ export default function HomePage({
         </div>
       </div>
 
-      <div className="relative pl-[06%] h-[50dvh] w-[70%] flex space-x-4 overflow-x-auto scrollbar-hide"
+      <div className="relative pl-[6%] h-[50dvh] w-[94%] flex space-x-6 overflow-x-auto scrollbar-hide"
         style={{
-          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%)',
-          maskImage: 'linear-gradient(to right, transparent 0%, black 10%, black 85%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 60%, black 90%, transparent 100%)',
+          maskImage: 'linear-gradient(to right, transparent 0%, black 60%, black 90%, transparent 100%)',
         }}>
         <Moments />
       </div>

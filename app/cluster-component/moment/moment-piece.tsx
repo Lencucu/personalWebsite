@@ -43,7 +43,7 @@ export default function MomentPiece({content,url,pos}:{
           if (fallback) fallback.classList.add('hidden');
         }}
       ></iframe>
-      <div className={`absolute text-center inset-0 flex items-center justify-center bg-gray-100 text-gray-500 iframe-fallback`+pos}>
+      <div className={`absolute text-center inset-0 flex items-center justify-center bg-gray-500 text-white iframe-fallback`+pos}>
         {content}
       </div>
       <a
