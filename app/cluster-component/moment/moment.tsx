@@ -1,13 +1,13 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import MomentPiece from '@/components/moment/moment-piece'
+import MomentPiece from './moment-piece'
 
 export default function Moments() {
   const [lines, setLines] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch('/api/read-file')
+    fetch('/cluster-api/read-file')
       .then(res => res.json())
       .then(data => setLines(data.lines || []));
   }, []);

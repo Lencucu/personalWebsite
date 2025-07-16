@@ -3,15 +3,15 @@
 import { useState, useRef, useEffect } from 'react';
 import gsap from "gsap";
 type GSAPTween = gsap.core.Tween;
-import bezierPoint from '@/lib/mathematicalLib/bezierPoint'
-import { buildPiecewiseFunction, integratePiecewiseAsFunctions, /*integratePiecewise, evaluatePiecewise, */evaluatePiecewiseFunctions, FnPiecewiseFunction/*, PiecewiseFunction*/ } from '@/lib/mathematicalLib/buildPiecewiseFunction';
+import bezierPoint from 'C/lib/mathematicalLib/bezierPoint'
+import { buildPiecewiseFunction, integratePiecewiseAsFunctions, /*integratePiecewise, evaluatePiecewise, */evaluatePiecewiseFunctions, FnPiecewiseFunction/*, PiecewiseFunction*/ } from 'C/lib/mathematicalLib/buildPiecewiseFunction';
 import {
   integralLine1Function,
   integralLine2Function,
   integralLine3Function,
   integralLine4Function,
   integralLine5_1Function,
-  line5_2 } from '@/lib/mathematicalLib/lines';
+  line5_2 } from 'C/lib/mathematicalLib/lines';
 
 export default function SplitContainer({
   FrameFront,
