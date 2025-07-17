@@ -168,7 +168,7 @@ export default function GemViewer() {
       geometry.dispose();
       material.dispose();
       mountRef.current?.removeChild(renderer.domElement);
-      mountRef.current?.removeEventListener('click', onClick);
+      // mountRef.current?.removeEventListener('click', onClick);
     };
   }/*, []*/);
 
