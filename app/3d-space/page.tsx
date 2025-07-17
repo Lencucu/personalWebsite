@@ -64,11 +64,21 @@ export default function GemViewer() {
     //     const c = faceIndex * 3 + 2;
     //     return [a, b, c];
     //   }
-    // }
-
+    // 
+    
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(mountRef.current.clientWidth, mountRef.current.clientHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(0x000000, 0);
+    const handleResize = () => {
+      if (!mountRef.current) return;
+      const width = mountRef.current.clientWidth;
+      const height = mountRef.current.clientHeight;
+
+      renderer.setSize(width, height);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    };
+    handleResize();
     mountRef.current.appendChild(renderer.domElement);
 
     scene.add(new THREE.AmbientLight(0xffffff, 0.4));
@@ -162,6 +172,7 @@ export default function GemViewer() {
     };
     animate();
 
+    window.addEventListener('resize', handleResize);
     return () => {
       cancelAnimationFrame(frameId);
       renderer.dispose();
@@ -169,6 +180,7 @@ export default function GemViewer() {
       material.dispose();
       mountRef.current?.removeChild(renderer.domElement);
       // mountRef.current?.removeEventListener('click', onClick);
+      window.removeEventListener('resize', handleResize);
     };
   }/*, []*/);
 
