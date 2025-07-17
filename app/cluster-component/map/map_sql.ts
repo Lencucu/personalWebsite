@@ -11,12 +11,12 @@ export type MapMarkerData = {
 
 export async function fetchMapMarkers() {
   try {
-    if (!process.env.POSTGRES_URL) return;
+    if (!process.env.POSTGRES_URL) return null;
     const sql = postgres(process.env.POSTGRES_URL);
     const data = await sql<MapMarkerData[]>`SELECT * FROM map_markers`;
     return data;
   } catch (error) {
     console.error('Database Error:', error);
-    return; // fallback 空数据
+    return null; // fallback 空数据
   }
 }
