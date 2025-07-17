@@ -77,7 +77,7 @@ function OffsetCenter({ targetLatLng, offsetXPercent, offsetYPercent }:{
   return null;
 }
 
-export default function Map({mapmarkers}: {mapmarkers: MapMarkerData[]}) {
+export default function Map({mapmarkers}: {mapmarkers: MapMarkerData[] | null}) {
   const [mounted, setMounted] = useState(false);
   const markers = mapmarkers || markers_template;
 
@@ -90,7 +90,7 @@ export default function Map({mapmarkers}: {mapmarkers: MapMarkerData[]}) {
 
   return (
     <MapContainer
-      center={[mapmarkers[0].lat+0.329, mapmarkers[0].lng+0.3715]}
+      center={[markers[0].lat+0.329, markers[0].lng+0.3715]}
       zoom={5}
       style={{ height: '100dvh', width: '100%' }}
       zoomControl={false}
@@ -126,7 +126,7 @@ export default function Map({mapmarkers}: {mapmarkers: MapMarkerData[]}) {
         ))}
       </Suspense>
       <OffsetCenter
-        targetLatLng = {L.latLng(mapmarkers[0].lat+0.329, mapmarkers[0].lng+0.3715)}
+        targetLatLng = {L.latLng(markers[0].lat+0.329, markers[0].lng+0.3715)}
         offsetXPercent = {0.04}
         offsetYPercent = {0.06}
       />
