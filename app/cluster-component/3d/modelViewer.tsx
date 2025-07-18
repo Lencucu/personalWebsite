@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 type Props = {
   modelPath: string; // 本地模型文件路径（public 目录下相对路径）
