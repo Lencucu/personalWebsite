@@ -35,7 +35,7 @@ export default function WindScatterTriangles({
         scale: 2,
         style: { transformOrigin: "top left" },
       })
-      .then((canvas) => {
+      .then((canvas: HTMLCanvasElement) => {
         const texture = new THREE.CanvasTexture(canvas);
         texture.needsUpdate = true;
 
