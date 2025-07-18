@@ -106,7 +106,7 @@ export default function WindScatterTriangles({
         newGeometry.setIndex(indices);
 
         mesh.geometry.dispose();
-        mesh.geometry = newGeometry;
+        mesh.geometry = newGeometry as THREE.PlaneGeometry;
 
         const faceCount = newGeometry.index!.count / 3;
         const positionAttr = newGeometry.attributes.position;
