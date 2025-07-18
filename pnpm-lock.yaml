@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@types/dom-to-image':
-        specifier: ^2.6.7
-        version: 2.6.7
       colorthief:
         specifier: ^2.6.0
         version: 2.6.0
@@ -48,6 +45,9 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4
         version: 4.1.10
+      '@types/dom-to-image':
+        specifier: ^2.6.7
+        version: 2.6.7
       '@types/leaflet':
         specifier: ^1.9.19
         version: 1.9.19

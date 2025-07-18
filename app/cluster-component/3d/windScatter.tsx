@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import * as domtoimage from "dom-to-image-more";
-
+import domtoimage from "dom-to-image-more";
 
 type WindScatterTrianglesProps = {
   targetId: string;
