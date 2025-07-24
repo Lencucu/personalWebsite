@@ -51,7 +51,7 @@ export default function HomePage({
       ? (e.touches[0].clientX - rect.left)
       : (e.clientX - rect.left);
     effectX_start_Ref.current = effectX;
-    lastPos.current = effectX;
+    lastPos.current = effectX ?? effectX_default;
     lastLastPos.current! = lastPos.current!;
     // 注意两个值的区别，第一个是记录点击时effect的实时进度值，第二、三个是记录滑动时的鼠标实时位置以及实时前一刻的位置
   }
