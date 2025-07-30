@@ -3,13 +3,13 @@
 import { useState } from "react";
 
 export default function UploadFiles() {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setFiles([...e.target.files]);
+      setFiles(Array.from(e.target.files));
     }
   };
 
