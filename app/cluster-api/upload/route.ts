@@ -97,9 +97,15 @@ export async function POST(req: Request) {
         }
       });
 
-      busboy.on("error", (err) => {
+      busboy.on("error", (err: unknown) => {
         console.error("busboy 错误：", err);
-        reject(NextResponse.json({ error: "Busboy error", detail: err.message }, { status: 500 }));
+        let message = "Unknown error";
+        if (err instanceof Error) {
+          message = err.message;
+        }
+        reject(
+          NextResponse.json({ error: "Busboy error", detail: message }, { status: 500 })
+        );
       });
 
       const reader = req.body?.getReader();
