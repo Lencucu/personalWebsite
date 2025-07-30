@@ -35,8 +35,12 @@ export default function UploadFiles() {
 
       const result = await response.json();
       alert("上传成功！");
-    } catch (err) {
-      alert("上传失败：" + err.message);
+    }} catch (err) {
+      if (err instanceof Error) {
+        alert("上传失败：" + err.message);
+      } else {
+        alert("上传失败：" + String(err));
+      }
     } finally {
       setUploading(false);
     }
