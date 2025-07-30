@@ -6,15 +6,19 @@ import { Writable } from "stream";
 export const runtime = "nodejs";
 export const config = { api: { bodyParser: false } };
 
+// async function getBusboy(headers: Record<string, string>) {
+//   // console.log("动态导入 busboy");
+//   const BusboyModule = await import("busboy");
+//   // console.log("BusboyModule:", BusboyModule);
+//   const Busboy = BusboyModule.Busboy || BusboyModule.default || BusboyModule;
+
+//   // console.log("busboy 导入成功，构造函数：", Busboy);
+
+//   return Busboy({ headers });
+// }
 async function getBusboy(headers: Record<string, string>) {
-  // console.log("动态导入 busboy");
-  const BusboyModule = await import("busboy");
-  // console.log("BusboyModule:", BusboyModule);
-  const Busboy = BusboyModule.Busboy || BusboyModule.default || BusboyModule;
-
-  // console.log("busboy 导入成功，构造函数：", Busboy);
-
-  return Busboy({ headers });
+  const { default: createBusboy } = await import("busboy");
+  return createBusboy({ headers });
 }
 
 function saveFile(filename: string, stream: NodeJS.ReadableStream): Promise<string> {
