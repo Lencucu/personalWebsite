@@ -70,7 +70,7 @@ export async function POST(req: Request) {
       promises.push(saveFile(safeFilename, fileStream));
     });
 
-    return new Promise((resolve, reject) => {
+    return new Promise<Response>((resolve, reject) => {
       busboy.on("finish", async () => {
         // console.log("busboy 处理结束");
         try {
