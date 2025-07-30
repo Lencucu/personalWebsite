@@ -8,7 +8,9 @@ export default function UploadFiles() {
   const [uploading, setUploading] = useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFiles([...e.target.files]);
+    if (e.target.files) {
+      setFiles([...e.target.files]);
+    }
   };
 
   const uploadFiles = async () => {
