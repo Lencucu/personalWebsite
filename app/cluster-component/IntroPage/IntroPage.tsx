@@ -22,7 +22,7 @@ export default function HomePage({
   bot_pl1?: [number,number],
   bot_pl2?: [number,number],
   bot_pl3?: [number,number],
-  leftSideWidth_distn?: [number,number],
+  leftSideWidth_distn?: [number, number],
   shouleGoBack?: boolean,
   onSwipe?: (ratio: number) => void;
 }) {

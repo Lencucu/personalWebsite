@@ -1,5 +1,5 @@
 import MainMapCom from '~/component/map/main'
-import IntroPage from '~/component/IntroPage/IntroPage'
+import IntroPage from '~/component/IntroPage/introPage'
 import SplitContainer from '~/ui/SplitContainer'
 
 export default function Origin() {
